@@ -1,5 +1,8 @@
 var Game = function (game) {
     this.game = game;
+    
+    // All game variables will be binded to the Game object.
+    var logo; // Okay, okay... This is how we're going to do it!--Honestly, I don't get it!
 };
 
 Game.prototype = {
@@ -8,7 +11,7 @@ Game.prototype = {
     },
 
     create: function () {
-        var logo = this.add.sprite(this.world.centerX, this.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
+        this.logo = this.add.sprite(this.world.centerX, this.world.centerY, 'logo'); // i think 'var logo;' binded it to Game
+        this.logo.anchor.setTo(0.5, 0.5);
     }
 };
