@@ -1,5 +1,5 @@
 var Game = function (game) {
-    this.game = game;
+    var game = game;
     
     // All game variables will be binded to the Game object.
     var logo; // Okay, okay... This is how we're going to do it!--Honestly, I don't get it!
