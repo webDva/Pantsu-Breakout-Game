@@ -3,6 +3,8 @@ var Game = function (game) {
     
     // All game variables will be binded to the Game object.
     var pantsu;
+    var pantsuGroup;
+    var ROWS, COLUMNS;
 };
 
 Game.prototype = {
@@ -11,6 +13,19 @@ Game.prototype = {
     },
 
     create: function () {
+        
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+        this.pantsuGroup = this.add.group();
+        
+        this.pantsuGroup.enableBody = true;
+        
+        /* Create 2D array of pantsu */
+        for (i = 0; i < this.ROWS; ++i) {
+            for (j = 0; j < this.COLUMNS; ++j) {
+                
+            }
+        }
+        
         this.pantsu = this.add.sprite(this.world.centerX, this.world.centerY, 'pantsu');
         this.pantsu.anchor.setTo(0.5, 0.5);
         
