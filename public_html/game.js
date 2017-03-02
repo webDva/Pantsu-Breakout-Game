@@ -4,10 +4,10 @@ var Game = function (game) {
     // All game variables will be binded to the Game object.
     var pantsuGroup;
     
-    ROWS = 10;
-    COLUMNS = 18;
+    ROWS = 6;
+    COLUMNS = 8;
     
-    SCALE = 32; // May not be responsive-friendly doing it like this
+    SCALE = 64; // May not be responsive-friendly doing it like this
 };
 
 Game.prototype = {
