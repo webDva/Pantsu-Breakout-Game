@@ -7,12 +7,18 @@ var Game = function (game) {
     ROWS = 6;
     COLUMNS = 8;
     
-    SCALE = 64; // May not be responsive-friendly doing it like this
+    SCALE = 48; // May not be responsive-friendly doing it like this
+    
+    var ball;
+    var platform;
+    RATIO_SCALE = 0.15;
 };
 
 Game.prototype = {
     preload: function () {
         this.load.image('pantsu', 'assets/pantsu.png');
+        this.load.image('ball', 'assets/ball.png');
+        this.load.image('platform', 'assets/platform.png');
     },
 
     create: function () {
@@ -31,5 +37,13 @@ Game.prototype = {
         
         this.pantsuGroup.setAll('width', SCALE);
         this.pantsuGroup.setAll('height', SCALE);
+        
+        ball = this.add.sprite(this.world.centerX, 400, 'ball');
+        ball.anchor.setTo(0.5, 0.5);
+        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07);
+        
+        platform = this.add.sprite(this.world.centerX, 500, 'platform');
+        platform.anchor.setTo(0.5, 0.5);
+        platform.scale.setTo(RATIO_SCALE, RATIO_SCALE);
     }
 };
