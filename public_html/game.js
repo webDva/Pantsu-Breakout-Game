@@ -12,6 +12,9 @@ var Game = function (game) {
     var ball;
     var platform;
     RATIO_SCALE = 0.15;
+    
+    var cursorKeys;
+    PLATFORM_MOVEMENT_SPEED = 4;
 };
 
 Game.prototype = {
@@ -40,10 +43,26 @@ Game.prototype = {
         
         ball = this.add.sprite(this.world.centerX, 400, 'ball');
         ball.anchor.setTo(0.5, 0.5);
-        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07);
+        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
+        this.physics.enable(ball, Phaser.Physics.ARCADE);
+        ball.body.collideWorldBounds = true;
         
         platform = this.add.sprite(this.world.centerX, 500, 'platform');
         platform.anchor.setTo(0.5, 0.5);
         platform.scale.setTo(RATIO_SCALE, RATIO_SCALE);
+        this.physics.enable(platform, Phaser.Physics.ARCADE);
+        platform.body.collideWorldBounds = true;
+        platform.inputEnabled = true;
+        
+        cursorKeys = this.input.keyboard.createCursorKeys();
+    },
+    
+    update: function() {
+        if (cursorKeys.left.isDown) {
+            platform.x -= PLATFORM_MOVEMENT_SPEED;
+        }
+        else if (cursorKeys.right.isDown) {
+            platform.x += PLATFORM_MOVEMENT_SPEED;
+        }
     }
 };
