@@ -14,7 +14,7 @@ var Game = function (game) {
     RATIO_SCALE = 0.15;
 
     var cursorKeys;
-    PLATFORM_MOVEMENT_SPEED = 4;
+    PLATFORM_MOVEMENT_SPEED = 225;
 };
 
 Game.prototype = {
@@ -46,7 +46,7 @@ Game.prototype = {
         ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
         this.physics.enable(ball, Phaser.Physics.ARCADE);
         ball.body.collideWorldBounds = true;
-        ball.body.velocity.setTo(0, 100);
+        ball.body.velocity.setTo(0, 200);
         ball.body.bounce.set(1);
 
         platform = this.add.sprite(this.world.centerX, 500, 'platform');
@@ -64,9 +64,9 @@ Game.prototype = {
         this.physics.arcade.collide(ball, platform);
         
         if (cursorKeys.left.isDown) {
-            platform.x -= PLATFORM_MOVEMENT_SPEED;
+            platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
         } else if (cursorKeys.right.isDown) {
-            platform.x += PLATFORM_MOVEMENT_SPEED;
+            platform.body.velocity.setTo(PLATFORM_MOVEMENT_SPEED, 0);
         }
     }
 };
