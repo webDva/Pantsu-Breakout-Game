@@ -64,7 +64,7 @@ Game.prototype = {
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         collisionCallback = function () {
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (135 - 45 + 1)) + 45);
-            ball.body.velocity.setTo(v.x, -200);
+            ball.body.velocity.setTo(v.x, -v.y + -200); // 200 so ball can bounce back up
         };
     },
 
