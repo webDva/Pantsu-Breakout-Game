@@ -4,8 +4,8 @@ var Game = function (game) {
     // All game variables will be binded to the Game object.
     var pantsuGroup;
 
-    ROWS = 4;
-    COLUMNS = 8;
+    ROWS = 5;
+    COLUMNS = 14;
 
     SCALE = 32; // May not be responsive-friendly doing it like this
 
