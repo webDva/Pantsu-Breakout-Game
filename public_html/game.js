@@ -15,6 +15,8 @@ var Game = function (game) {
 
     var cursorKeys;
     PLATFORM_MOVEMENT_SPEED = 225;
+    
+    var arcadeReference;
 };
 
 Game.prototype = {
@@ -58,11 +60,17 @@ Game.prototype = {
         platform.body.immovable = true;
 
         cursorKeys = this.input.keyboard.createCursorKeys();
+
+        arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
+        collisionCallback = function () {
+            var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (135 - 45 + 1)) + 45);
+            ball.body.velocity.setTo(v.x, -200);
+        };
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform);
-        
+        this.physics.arcade.collide(ball, platform, collisionCallback);
+
         if (cursorKeys.left.isDown) {
             platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
         } else if (cursorKeys.right.isDown) {
