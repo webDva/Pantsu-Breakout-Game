@@ -17,8 +17,11 @@ var Game = function (game) {
     PLATFORM_MOVEMENT_SPEED = 225;
 
     var arcadeReference, pantsuReference; // need this for referencing game's variables inside local functions
-    
+
     BALL_SPEED = 200;
+
+    // buttons
+    var arrowLeft, arrowRight;
 };
 
 Game.prototype = {
@@ -26,6 +29,8 @@ Game.prototype = {
         this.load.image('pantsu', 'assets/pantsu.png');
         this.load.image('ball', 'assets/ball.png');
         this.load.image('platform', 'assets/platform.png');
+        this.load.image('arrowLeft', 'assets/arrowLeft.png');
+        this.load.image('arrowRight', 'assets/arrowRight.png');
     },
 
     create: function () {
@@ -44,7 +49,7 @@ Game.prototype = {
 
         this.pantsuGroup.setAll('width', SCALE);
         this.pantsuGroup.setAll('height', SCALE);
-        
+
         // setting the location of the group
         this.pantsuGroup.centerX = this.world.centerX;
         this.pantsuGroup.centerY = this.world.centerY - 90;
@@ -82,6 +87,17 @@ Game.prototype = {
         processHandler = function (ball, pantsu) {
             return true;
         };
+
+        leftArrowCallback = function () {
+            platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
+        };
+
+        rightArrowCallback = function () {
+            platform.body.velocity.setTo(PLATFORM_MOVEMENT_SPEED, 0);
+        };
+
+        arrowLeft = this.add.button(0, 500, 'arrowLeft', leftArrowCallback);
+        arrowRight = this.add.button(600, 500, 'arrowRight', rightArrowCallback);
     },
 
     update: function () {
