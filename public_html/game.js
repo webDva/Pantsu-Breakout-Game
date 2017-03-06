@@ -15,8 +15,8 @@ var Game = function (game) {
 
     var cursorKeys;
     PLATFORM_MOVEMENT_SPEED = 225;
-    
-    var arcadeReference;
+
+    var arcadeReference, pantsuReference; // need this for referencing game's variables inside local functions
 };
 
 Game.prototype = {
@@ -62,14 +62,24 @@ Game.prototype = {
         cursorKeys = this.input.keyboard.createCursorKeys();
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
-        collisionCallback = function () {
+        ballPlatformCollision = function () {
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (135 - 45 + 1)) + 45);
             ball.body.velocity.setTo(v.x, -v.y + -200); // 200 so ball can bounce back up
+        };
+
+        pantsuReference = this.pantsuGroup;
+        hitPantsuCallback = function (ball, pantsu) {
+            pantsuReference.remove(pantsu);
+        };
+
+        processHandler = function (ball, pantsu) {
+            return true;
         };
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform, collisionCallback);
+        this.physics.arcade.collide(ball, platform, ballPlatformCollision);
+        this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
             platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
