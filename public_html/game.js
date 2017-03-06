@@ -17,6 +17,8 @@ var Game = function (game) {
     PLATFORM_MOVEMENT_SPEED = 225;
 
     var arcadeReference, pantsuReference; // need this for referencing game's variables inside local functions
+    
+    BALL_SPEED = 200;
 };
 
 Game.prototype = {
@@ -64,12 +66,13 @@ Game.prototype = {
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (135 - 45 + 1)) + 45);
-            ball.body.velocity.setTo(v.x, -v.y + -200); // 200 so ball can bounce back up
+            ball.body.velocity.setTo(v.x, -v.y + -BALL_SPEED); // 200 so ball can bounce back up
         };
 
         pantsuReference = this.pantsuGroup;
         hitPantsuCallback = function (ball, pantsu) {
             pantsuReference.remove(pantsu);
+            ball.body.velocity.setTo(Math.floor(Math.random() * (BALL_SPEED - (BALL_SPEED - 40) + 1)) + (BALL_SPEED - 40));
         };
 
         processHandler = function (ball, pantsu) {
