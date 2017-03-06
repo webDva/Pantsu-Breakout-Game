@@ -4,7 +4,7 @@ var Game = function (game) {
     // All game variables will be binded to the Game object.
     var pantsuGroup;
 
-    ROWS = 6;
+    ROWS = 4;
     COLUMNS = 8;
 
     SCALE = 32; // May not be responsive-friendly doing it like this
@@ -52,7 +52,6 @@ Game.prototype = {
 
         // setting the location of the group
         this.pantsuGroup.centerX = this.world.centerX;
-        this.pantsuGroup.centerY = this.world.centerY - 90;
 
         ball = this.add.sprite(0, 0, 'ball');
         ball.anchor.setTo(0.5, 0.5);
@@ -62,7 +61,7 @@ Game.prototype = {
         ball.body.velocity.setTo(0, 200);
         ball.body.bounce.set(1);
 
-        platform = this.add.sprite(this.world.centerX, 500, 'platform');
+        platform = this.add.sprite(this.world.centerX, window.innerHeight, 'platform');
         platform.anchor.setTo(0.5, 0.5);
         platform.scale.setTo(RATIO_SCALE, RATIO_SCALE);
         this.physics.enable(platform, Phaser.Physics.ARCADE);
@@ -96,8 +95,8 @@ Game.prototype = {
             platform.body.velocity.setTo(PLATFORM_MOVEMENT_SPEED, 0);
         };
 
-        arrowLeft = this.add.button(0, 440, 'arrowLeft', leftArrowCallback);
-        arrowRight = this.add.button(800 - 106, 440, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
+        arrowLeft = this.add.button(0, this.world.centerY / 2, 'arrowLeft', leftArrowCallback);
+        arrowRight = this.add.button(this.world.centerX * 0.5, this.world.centerY / 2, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
     },
 
     update: function () {
