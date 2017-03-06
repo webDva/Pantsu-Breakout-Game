@@ -7,11 +7,11 @@ var Game = function (game) {
     ROWS = 6;
     COLUMNS = 8;
 
-    SCALE = 48; // May not be responsive-friendly doing it like this
+    SCALE = 32; // May not be responsive-friendly doing it like this
 
     var ball;
     var platform;
-    RATIO_SCALE = 0.15;
+    RATIO_SCALE = 0.11;
 
     var cursorKeys;
     PLATFORM_MOVEMENT_SPEED = 225;
@@ -54,7 +54,7 @@ Game.prototype = {
         this.pantsuGroup.centerX = this.world.centerX;
         this.pantsuGroup.centerY = this.world.centerY - 90;
 
-        ball = this.add.sprite(this.world.centerX, 400, 'ball');
+        ball = this.add.sprite(0, 0, 'ball');
         ball.anchor.setTo(0.5, 0.5);
         ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
         this.physics.enable(ball, Phaser.Physics.ARCADE);

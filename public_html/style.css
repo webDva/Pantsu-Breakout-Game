@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 450px; /* this might be good enough for mobile */
+    height: 275px; /* this might be good enough for mobile */
 }
 
 body {
