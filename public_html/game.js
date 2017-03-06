@@ -87,7 +87,7 @@ Game.prototype = {
         processHandler = function (ball, pantsu) {
             return true;
         };
-
+        
         leftArrowCallback = function () {
             platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
         };
@@ -96,8 +96,8 @@ Game.prototype = {
             platform.body.velocity.setTo(PLATFORM_MOVEMENT_SPEED, 0);
         };
 
-        arrowLeft = this.add.button(0, 500, 'arrowLeft', leftArrowCallback);
-        arrowRight = this.add.button(600, 500, 'arrowRight', rightArrowCallback);
+        arrowLeft = this.add.button(0, 440, 'arrowLeft', leftArrowCallback);
+        arrowRight = this.add.button(800 - 106, 440, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
     },
 
     update: function () {
