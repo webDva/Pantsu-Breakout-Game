@@ -95,8 +95,8 @@ Game.prototype = {
             platform.body.velocity.setTo(PLATFORM_MOVEMENT_SPEED, 0);
         };
 
-        arrowLeft = this.add.button(0, this.world.centerY / 2, 'arrowLeft', leftArrowCallback);
-        arrowRight = this.add.button(this.world.centerX * 0.5, this.world.centerY / 2, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
+        arrowLeft = this.add.button(0, this.world.centerY * 2 - 106, 'arrowLeft', leftArrowCallback);
+        arrowRight = this.add.button(this.world.centerX * 2 - 106, this.world.centerY * 2 - 106, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
     },
 
     update: function () {
