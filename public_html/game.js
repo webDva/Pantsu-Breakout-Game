@@ -52,6 +52,9 @@ Game.prototype = {
 
         // setting the location of the group
         this.pantsuGroup.centerX = this.world.centerX;
+        if (window.innerWidth > 800) { // for desktop versions
+            this.pantsuGroup.centerY = this.world.centerY;
+        }
 
         ball = this.add.sprite(0, 0, 'ball');
         ball.anchor.setTo(0.5, 0.5);

@@ -14,8 +14,17 @@
     <body>
         <script type="text/javascript">
             (function () {
-
-                var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'phaser-canvas');
+                // a hacky way to accomodate both desktop and mobile versions
+                var width, height;
+                if (window.innerWidth > 800) {
+                    width = 800;
+                    height = 600;
+                } else {
+                    width = window.innerWidth;
+                    height = window.innerHeight;
+                }
+                
+                var game = new Phaser.Game(width, height, Phaser.AUTO, 'phaser-canvas');
                 game.state.add("Game", Game);
                 game.state.start("Game");
 
