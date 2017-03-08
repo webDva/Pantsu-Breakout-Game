@@ -22,6 +22,12 @@ var Game = function (game) {
 
     // buttons
     var arrowLeft, arrowRight;
+
+    var bounceUpsRemaining;
+    var pantsusHit;
+
+    var style;
+    var scoreText;
 };
 
 Game.prototype = {
@@ -74,6 +80,12 @@ Game.prototype = {
 
         cursorKeys = this.input.keyboard.createCursorKeys();
 
+        bounceUpsRemaining = 10;
+        pantsusHit = 0;
+
+        style = {font: "22px Arial", fill: "#ffffff"};
+        scoreText = this.add.text(0, 0, "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit, style);
+
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
@@ -82,6 +94,9 @@ Game.prototype = {
 
         pantsuReference = this.pantsuGroup;
         hitPantsuCallback = function (ball, pantsu) {
+            pantsusHit += 1;
+            scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
+
             pantsuReference.remove(pantsu);
             ball.body.velocity.setTo(Math.floor(Math.random() * (BALL_SPEED - (BALL_SPEED - 40) + 1)) + (BALL_SPEED - 40));
         };
@@ -89,7 +104,7 @@ Game.prototype = {
         processHandler = function (ball, pantsu) {
             return true;
         };
-        
+
         leftArrowCallback = function () {
             platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
         };
