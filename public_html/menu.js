@@ -4,8 +4,8 @@ var Menu = function (game) {
 
 Menu.prototype = {
     create: function () {
-        var style = {font: "65px Arial", fill: "#ffffff", align: "center"};
-        var text = this.add.text(this.world.centerX, this.world.centerY, "Start", style);
+        var style = {font: "65px Arial", fill: "#cd3aff", align: "center"};
+        var text = this.add.text(this.world.centerX, this.world.centerY, "Touch to begin", style);
         text.anchor.setTo(0.5, 0.5);
 
         // mobile doesn't really go fullscreen, but at least a menu and game state were added

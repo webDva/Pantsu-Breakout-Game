@@ -22,6 +22,12 @@ var Game = function (game) {
 
     // buttons
     var arrowLeft, arrowRight;
+
+    var bounceUpsRemaining;
+    var pantsusHit;
+
+    var style;
+    var scoreText;
 };
 
 Game.prototype = {
@@ -31,9 +37,14 @@ Game.prototype = {
         this.load.image('platform', 'assets/platform.png');
         this.load.image('arrowLeft', 'assets/arrowLeft.png');
         this.load.image('arrowRight', 'assets/arrowRight.png');
+
+        this.load.audio('zap', 'assets/zap2.wav');
     },
 
     create: function () {
+        zapSound = this.add.audio('zap');
+        
+        this.stage.backgroundColor = "#0e1228";
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
         this.pantsuGroup = this.add.group();
@@ -74,6 +85,12 @@ Game.prototype = {
 
         cursorKeys = this.input.keyboard.createCursorKeys();
 
+        bounceUpsRemaining = 10;
+        pantsusHit = 0;
+
+        style = {font: "22px Arial", fill: "#d6082a"};
+        scoreText = this.add.text(0, 0, "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit, style);
+
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
@@ -82,6 +99,11 @@ Game.prototype = {
 
         pantsuReference = this.pantsuGroup;
         hitPantsuCallback = function (ball, pantsu) {
+            zapSound.play();
+
+            pantsusHit += 1;
+            scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
+
             pantsuReference.remove(pantsu);
             ball.body.velocity.setTo(Math.floor(Math.random() * (BALL_SPEED - (BALL_SPEED - 40) + 1)) + (BALL_SPEED - 40));
         };
@@ -89,7 +111,7 @@ Game.prototype = {
         processHandler = function (ball, pantsu) {
             return true;
         };
-        
+
         leftArrowCallback = function () {
             platform.body.velocity.setTo(-PLATFORM_MOVEMENT_SPEED, 0);
         };
