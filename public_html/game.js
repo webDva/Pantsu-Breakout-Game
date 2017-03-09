@@ -37,9 +37,12 @@ Game.prototype = {
         this.load.image('platform', 'assets/platform.png');
         this.load.image('arrowLeft', 'assets/arrowLeft.png');
         this.load.image('arrowRight', 'assets/arrowRight.png');
+
+        this.load.audio('zap', 'assets/zap2.wav');
     },
 
     create: function () {
+        zapSound = this.add.audio('zap');
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
         this.pantsuGroup = this.add.group();
@@ -94,6 +97,8 @@ Game.prototype = {
 
         pantsuReference = this.pantsuGroup;
         hitPantsuCallback = function (ball, pantsu) {
+            zapSound.play();
+
             pantsusHit += 1;
             scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
 
