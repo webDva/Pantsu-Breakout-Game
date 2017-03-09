@@ -14,7 +14,7 @@ var Game = function (game) {
     RATIO_SCALE = 0.11;
 
     var cursorKeys;
-    PLATFORM_MOVEMENT_SPEED = 225;
+    PLATFORM_MOVEMENT_SPEED = 300;
 
     var arcadeReference, pantsuReference; // need this for referencing game's variables inside local functions
 
@@ -43,7 +43,7 @@ Game.prototype = {
 
     create: function () {
         zapSound = this.add.audio('zap');
-        
+
         this.stage.backgroundColor = "#0e1228";
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -67,14 +67,6 @@ Game.prototype = {
             this.pantsuGroup.centerY = this.world.centerY;
         }
 
-        ball = this.add.sprite(0, 0, 'ball');
-        ball.anchor.setTo(0.5, 0.5);
-        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
-        this.physics.enable(ball, Phaser.Physics.ARCADE);
-        ball.body.collideWorldBounds = true;
-        ball.body.velocity.setTo(0, 200);
-        ball.body.bounce.set(1);
-
         platform = this.add.sprite(this.world.centerX, window.innerHeight, 'platform');
         platform.anchor.setTo(0.5, 0.5);
         platform.scale.setTo(RATIO_SCALE, RATIO_SCALE);
@@ -82,6 +74,14 @@ Game.prototype = {
         platform.body.collideWorldBounds = true;
         platform.inputEnabled = true;
         platform.body.immovable = true;
+
+        ball = this.add.sprite(platform.x, platform.y - platform.body.height, 'ball');
+        ball.anchor.setTo(0.5, 0.5);
+        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
+        this.physics.enable(ball, Phaser.Physics.ARCADE);
+        ball.body.collideWorldBounds = true;
+        ball.body.velocity.setTo(0, 200);
+        ball.body.bounce.set(1);
 
         cursorKeys = this.input.keyboard.createCursorKeys();
 
@@ -93,6 +93,8 @@ Game.prototype = {
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
+            // Only using this callback if the ball would get stuck in a loop.
+            // It doesn't get stuck now, since the ball's initial position is inbetween the pantsus and platform.
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
             ball.body.velocity.setTo(v.x, -v.y + -BALL_SPEED); // 200 so ball can bounce back up
         };
@@ -122,10 +124,18 @@ Game.prototype = {
 
         arrowLeft = this.add.button(0, this.world.centerY * 2 - 106, 'arrowLeft', leftArrowCallback);
         arrowRight = this.add.button(this.world.centerX * 2 - 106, this.world.centerY * 2 - 106, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
+
+        ball.body.onWorldBounds = new Phaser.Signal();
+        ball.body.onWorldBounds.add(function (sprite, up, down, left, right) {
+            if (down) {
+                bounceUpsRemaining -= 1;
+                scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
+            }
+        });
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform, ballPlatformCollision);
+        this.physics.arcade.collide(ball, platform);
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
