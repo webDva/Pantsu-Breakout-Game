@@ -43,6 +43,8 @@ Game.prototype = {
 
     create: function () {
         zapSound = this.add.audio('zap');
+        
+        this.stage.backgroundColor = "#0e1228";
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
         this.pantsuGroup = this.add.group();
@@ -86,7 +88,7 @@ Game.prototype = {
         bounceUpsRemaining = 10;
         pantsusHit = 0;
 
-        style = {font: "22px Arial", fill: "#ffffff"};
+        style = {font: "22px Arial", fill: "#d6082a"};
         scoreText = this.add.text(0, 0, "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit, style);
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
