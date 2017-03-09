@@ -43,7 +43,7 @@ Game.prototype = {
 
     create: function () {
         zapSound = this.add.audio('zap');
-        
+
         this.stage.backgroundColor = "#0e1228";
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -124,6 +124,14 @@ Game.prototype = {
 
         arrowLeft = this.add.button(0, this.world.centerY * 2 - 106, 'arrowLeft', leftArrowCallback);
         arrowRight = this.add.button(this.world.centerX * 2 - 106, this.world.centerY * 2 - 106, 'arrowRight', rightArrowCallback); // well! hard-coding the size works!
+
+        ball.body.onWorldBounds = new Phaser.Signal();
+        ball.body.onWorldBounds.add(function (sprite, up, down, left, right) {
+            if (down) {
+                bounceUpsRemaining -= 1;
+                scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
+            }
+        });
     },
 
     update: function () {
