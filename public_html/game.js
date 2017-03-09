@@ -67,14 +67,6 @@ Game.prototype = {
             this.pantsuGroup.centerY = this.world.centerY;
         }
 
-        ball = this.add.sprite(0, 0, 'ball');
-        ball.anchor.setTo(0.5, 0.5);
-        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
-        this.physics.enable(ball, Phaser.Physics.ARCADE);
-        ball.body.collideWorldBounds = true;
-        ball.body.velocity.setTo(0, 200);
-        ball.body.bounce.set(1);
-
         platform = this.add.sprite(this.world.centerX, window.innerHeight, 'platform');
         platform.anchor.setTo(0.5, 0.5);
         platform.scale.setTo(RATIO_SCALE, RATIO_SCALE);
@@ -82,6 +74,14 @@ Game.prototype = {
         platform.body.collideWorldBounds = true;
         platform.inputEnabled = true;
         platform.body.immovable = true;
+
+        ball = this.add.sprite(platform.x, platform.y - platform.body.height, 'ball');
+        ball.anchor.setTo(0.5, 0.5);
+        ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
+        this.physics.enable(ball, Phaser.Physics.ARCADE);
+        ball.body.collideWorldBounds = true;
+        ball.body.velocity.setTo(0, 200);
+        ball.body.bounce.set(1);
 
         cursorKeys = this.input.keyboard.createCursorKeys();
 
@@ -125,7 +125,7 @@ Game.prototype = {
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform, ballPlatformCollision);
+        //this.physics.arcade.collide(ball, platform, ballPlatformCollision); // only using this if the ball would get stuck in a loop
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
