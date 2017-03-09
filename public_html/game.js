@@ -14,7 +14,7 @@ var Game = function (game) {
     RATIO_SCALE = 0.11;
 
     var cursorKeys;
-    PLATFORM_MOVEMENT_SPEED = 225;
+    PLATFORM_MOVEMENT_SPEED = 300;
 
     var arcadeReference, pantsuReference; // need this for referencing game's variables inside local functions
 
@@ -93,6 +93,8 @@ Game.prototype = {
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
+            // Only using this callback if the ball would get stuck in a loop.
+            // It doesn't get stuck now, since the ball's initial position is inbetween the pantsus and platform.
             var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
             ball.body.velocity.setTo(v.x, -v.y + -BALL_SPEED); // 200 so ball can bounce back up
         };
@@ -125,7 +127,7 @@ Game.prototype = {
     },
 
     update: function () {
-        //this.physics.arcade.collide(ball, platform, ballPlatformCollision); // only using this if the ball would get stuck in a loop
+        this.physics.arcade.collide(ball, platform);
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
