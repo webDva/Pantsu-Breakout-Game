@@ -3,7 +3,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 275px; /* this might be good enough for mobile */
+}
+
+@media (max-device-height: 590px) { /* phone */
+    #phaser-canvas {
+        height: 135%;
+        margin: 2px;            
+    }
+}
+
+@media (min-device-height: 591px) and (max-device-height: 759px) { /* tablet */
+    #phaser-canvas {
+        height: 97%;
+        margin: 3px;
+    }
+}
+
+@media (min-device-height: 800px) { /* desktop */
+    #phaser-canvas {
+        height: 550px;
+    }
 }
 
 body {
