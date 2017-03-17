@@ -39,10 +39,12 @@ Game.prototype = {
         this.load.image('arrowRight', 'assets/arrowRight.png');
 
         this.load.audio('zap', 'assets/zap2.wav');
+        this.load.audio('loss', 'assets/perfectLoss.wav');
     },
 
     create: function () {
         zapSound = this.add.audio('zap');
+        lossSound = this.add.audio('loss');
 
         this.stage.backgroundColor = "#0e1228";
 
@@ -129,6 +131,7 @@ Game.prototype = {
         ball.body.onWorldBounds = new Phaser.Signal();
         ball.body.onWorldBounds.add(function (sprite, up, down, left, right) {
             if (down) {
+                lossSound.play();
                 bounceUpsRemaining -= 1;
                 scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
             }
