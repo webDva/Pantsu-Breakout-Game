@@ -75,12 +75,13 @@ Game.prototype = {
         platform.inputEnabled = true;
         platform.body.immovable = true;
 
-        ball = this.add.sprite(platform.x, platform.y - platform.body.height, 'ball');
+        // give the player free pantsu instead of deducting bouncies from them
+        ball = this.add.sprite(platform.x, platform.y - (platform.body.height + 200), 'ball');
         ball.anchor.setTo(0.5, 0.5);
         ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
         this.physics.enable(ball, Phaser.Physics.ARCADE);
         ball.body.collideWorldBounds = true;
-        ball.body.velocity.setTo(0, 200);
+        ball.body.velocity.setTo(50, 200);
         ball.body.bounce.set(1);
 
         cursorKeys = this.input.keyboard.createCursorKeys();
