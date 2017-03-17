@@ -40,11 +40,14 @@ Game.prototype = {
 
         this.load.audio('zap', 'assets/zap2.wav');
         this.load.audio('loss', 'assets/perfectLoss.wav');
+        this.load.audio('platformHit', 'assets/platformHit.wav');
     },
 
     create: function () {
+        // lol, this is wrong
         zapSound = this.add.audio('zap');
         lossSound = this.add.audio('loss');
+        platformHit = this.add.audio('platformHit');
 
         this.stage.backgroundColor = "#0e1228";
 
@@ -96,10 +99,7 @@ Game.prototype = {
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
-            // Only using this callback if the ball would get stuck in a loop.
-            // It doesn't get stuck now, since the ball's initial position is inbetween the pantsus and platform.
-            var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
-            ball.body.velocity.setTo(v.x, -v.y + -BALL_SPEED); // 200 so ball can bounce back up
+            platformHit.play();
         };
 
         pantsuReference = this.pantsuGroup;
@@ -139,7 +139,7 @@ Game.prototype = {
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform);
+        this.physics.arcade.collide(ball, platform, ballPlatformCollision);
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
