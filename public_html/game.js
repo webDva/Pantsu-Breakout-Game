@@ -39,10 +39,15 @@ Game.prototype = {
         this.load.image('arrowRight', 'assets/arrowRight.png');
 
         this.load.audio('zap', 'assets/zap2.wav');
+        this.load.audio('loss', 'assets/perfectLoss.wav');
+        this.load.audio('platformHit', 'assets/platformHit.wav');
     },
 
     create: function () {
+        // lol, this is wrong
         zapSound = this.add.audio('zap');
+        lossSound = this.add.audio('loss');
+        platformHit = this.add.audio('platformHit');
 
         this.stage.backgroundColor = "#0e1228";
 
@@ -75,12 +80,13 @@ Game.prototype = {
         platform.inputEnabled = true;
         platform.body.immovable = true;
 
-        ball = this.add.sprite(platform.x, platform.y - platform.body.height, 'ball');
+        // give the player free pantsu instead of deducting bouncies from them
+        ball = this.add.sprite(platform.x, platform.y - (platform.body.height + 200), 'ball');
         ball.anchor.setTo(0.5, 0.5);
         ball.scale.setTo(RATIO_SCALE - 0.07, RATIO_SCALE - 0.07); // ball has to be smaller than platform's scale
         this.physics.enable(ball, Phaser.Physics.ARCADE);
         ball.body.collideWorldBounds = true;
-        ball.body.velocity.setTo(0, 200);
+        ball.body.velocity.setTo(50, 200);
         ball.body.bounce.set(1);
 
         cursorKeys = this.input.keyboard.createCursorKeys();
@@ -93,10 +99,7 @@ Game.prototype = {
 
         arcadeReference = this.physics.arcade; // got to, because i don't know how to javascript that well enough
         ballPlatformCollision = function () {
-            // Only using this callback if the ball would get stuck in a loop.
-            // It doesn't get stuck now, since the ball's initial position is inbetween the pantsus and platform.
-            var v = arcadeReference.velocityFromAngle(Math.floor(Math.random() * (160 - 20 + 1)) + 20);
-            ball.body.velocity.setTo(v.x, -v.y + -BALL_SPEED); // 200 so ball can bounce back up
+            platformHit.play();
         };
 
         pantsuReference = this.pantsuGroup;
@@ -128,6 +131,7 @@ Game.prototype = {
         ball.body.onWorldBounds = new Phaser.Signal();
         ball.body.onWorldBounds.add(function (sprite, up, down, left, right) {
             if (down) {
+                lossSound.play();
                 bounceUpsRemaining -= 1;
                 scoreText.text = "Bouncies left: " + bounceUpsRemaining + "\nPantsus hit: " + pantsusHit;
             }
@@ -135,7 +139,7 @@ Game.prototype = {
     },
 
     update: function () {
-        this.physics.arcade.collide(ball, platform);
+        this.physics.arcade.collide(ball, platform, ballPlatformCollision);
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
         if (cursorKeys.left.isDown) {
