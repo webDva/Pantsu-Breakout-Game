@@ -9,6 +9,7 @@
         <script type="text/javascript" src="phaser.min.js"></script>
         <script type="text/javascript" src="menu.js"></script>
         <script type="text/javascript" src="game.js"></script>
+        <script type="text/javascript" src="end.js"></script>
         
         <link rel="stylesheet" href="style.css">
         
@@ -30,6 +31,7 @@
                 var game = new Phaser.Game(width, height, Phaser.AUTO, 'phaser-canvas');
                 game.state.add("Menu", Menu);
                 game.state.add("Game", Game);
+                game.state.add("End", End);
                 game.state.start("Menu");
 
             })();
