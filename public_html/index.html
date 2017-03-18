@@ -10,9 +10,9 @@
         <script type="text/javascript" src="menu.js"></script>
         <script type="text/javascript" src="game.js"></script>
         <script type="text/javascript" src="end.js"></script>
-        
+
         <link rel="stylesheet" href="style.css">
-        
+
         <link href="assets/pantsu.png" rel="icon" type="image/x-icon" />
     </head>
     <body>
@@ -27,7 +27,7 @@
                     width = window.innerWidth;
                     height = window.innerHeight;
                 }
-                
+
                 var game = new Phaser.Game(width, height, Phaser.AUTO, 'phaser-canvas');
                 game.state.add("Menu", Menu);
                 game.state.add("Game", Game);

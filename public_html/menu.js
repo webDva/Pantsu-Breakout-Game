@@ -13,12 +13,12 @@ Menu.prototype = {
         // instructions near the top
         var text = this.add.text(this.world.centerX, this.world.centerY / 2, instructions, style);
         text.anchor.setTo(0.5, 0.5);
-        
+
         // start button near the bottom
         var startText = this.add.text(this.world.centerX, this.world.centerY + (this.world.centerY / 2), "TAP TO PLAY",
-        {font: "bold 40px Droid Sans", fill: "#009e1a", align: "center"});
+                {font: "bold 40px Droid Sans", fill: "#009e1a", align: "center"});
         startText.anchor.setTo(0.5, 0.5);
-        
+
         startText.inputEnabled = true;
 
         this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;

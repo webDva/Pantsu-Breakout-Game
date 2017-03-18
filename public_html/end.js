@@ -4,8 +4,9 @@ var End = function (game) {
 
 End.prototype = {
     create: function () {
-        var endMessage = "You hit " + pantsusHit + " pantsus out of " + ROWS * COLUMNS + " pantsus" +
-                "\n\nYou had " + bounceUpsRemaining + " bouncies remaining";
+        // at least I got this going on for me with the global vars
+        var endMessage = "You hit " + pantsusHit + " out of " + ROWS * COLUMNS + " pantsus" +
+                "\nwith " + bounceUpsRemaining + " bouncies remaining";
 
         var style = {font: "20px Droid Sans", fill: "#de7fff", align: "center"};
         var text = this.add.text(this.world.centerX, this.world.centerY, endMessage, style);

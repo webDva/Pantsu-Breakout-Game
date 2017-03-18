@@ -142,7 +142,7 @@ Game.prototype = {
         if (pantsusHit === ROWS * COLUMNS || bounceUpsRemaining === 0) {
             this.state.start("End");
         }
-        
+
         this.physics.arcade.collide(ball, platform, ballPlatformCollision);
         this.physics.arcade.collide(ball, this.pantsuGroup, hitPantsuCallback, processHandler);
 
